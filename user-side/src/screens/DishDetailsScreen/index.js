@@ -37,7 +37,7 @@ const DishDetailsScreen = () => {
             </View>
 
             <View style={styles.button}>
-                <Text style={styles.buttonText}>Add {quantity} to cart (${getTotal()})</Text>
+                <Text style={styles.buttonText}>Add {quantity} to cart &#8226; ${getTotal()}</Text>
             </View>
 
         </View>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         color: '#696969',
     },
     separator:{
-        height: 1,
+        height: 2,
         backgroundColor: 'lightgray',
         marginVertical: 10,
     },
