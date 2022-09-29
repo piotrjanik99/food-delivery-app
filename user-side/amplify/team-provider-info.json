@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fooddeliveryapp-staging-93137-authRole",
+      "UnauthRoleArn": "arn:aws:iam::005233062183:role/amplify-fooddeliveryapp-staging-93137-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::005233062183:role/amplify-fooddeliveryapp-staging-93137-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-fooddeliveryapp-staging-93137-deployment",
+      "UnauthRoleName": "amplify-fooddeliveryapp-staging-93137-unauthRole",
+      "StackName": "amplify-fooddeliveryapp-staging-93137",
+      "StackId": "arn:aws:cloudformation:eu-west-2:005233062183:stack/amplify-fooddeliveryapp-staging-93137/59a7cff0-3f10-11ed-8eef-0a63690ef93e",
+      "AmplifyAppId": "d144gz46cqxj67"
+    },
+    "categories": {
+      "auth": {
+        "fooddeliveryapp": {}
+      }
+    }
+  }
+}
