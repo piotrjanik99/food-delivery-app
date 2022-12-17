@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Image, View, Text, Pressable } from 'react-native';
 
+const DEFAULT_IMAGE = "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg";
+
 const RestaurantItem = ({restaurant}) => {
   const navigation = useNavigation();
   const onPress = () => {
@@ -9,18 +11,19 @@ const RestaurantItem = ({restaurant}) => {
   return(
     <Pressable onPress={onPress} style={styles.restaurantContainter}>
         <Image 
-          source={{uri: restaurant.image,
+          source={{
+            uri: restaurant.image.startsWith('http') ? restaurant.image: DEFAULT_IMAGE
          }}
           style={styles.image}
       />
       <View style={styles.row}>
       <View>
         <Text style={styles.title}>{restaurant.name}</Text>
-        <Text style={styles.subtitle}>${restaurant.deliveryFee} &#8226; {restaurant.minDeliveryTime}-{restaurant.maxDeliveryTime} minutes</Text>
+        <Text style={styles.subtitle}>${restaurant.deliveryFee.toFixed(1)} &#8226; {restaurant.minDeliveryTime}-{restaurant.maxDeliveryTime} minutes</Text>
       </View>
 
       <View style={styles.rating}>
-        <Text>{restaurant.rating}</Text>
+        <Text>{restaurant.rating.toFixed(1)}</Text>
       </View>
 
 
@@ -33,11 +36,11 @@ export default RestaurantItem;
 
 const styles = StyleSheet.create({
     restaurantContainter:{
-      marginVertical: 10,
+      marginVertical: 5,
     },
     image:{
       width: '100%',
-      aspectRatio: 6 / 3,
+      aspectRatio: 5 / 2,
       marginBottom: 5,
     },
     title:{

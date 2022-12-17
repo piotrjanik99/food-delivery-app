@@ -1,5 +1,5 @@
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import RestaurantDetailsPage from '../screens/RestaurantDetailsScreen';
 import DishDetailsScreen from '../screens/DishDetailsScreen';
@@ -21,7 +21,7 @@ const RootNavigator = () => {
     );
 };
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 const HomeTabs = () => {
     return(

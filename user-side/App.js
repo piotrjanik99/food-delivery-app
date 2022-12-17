@@ -16,6 +16,6 @@ function App() {
       <StatusBar style="light" />
     </NavigationContainer>
   );
-};
+}
 
 export default withAuthenticator(App);

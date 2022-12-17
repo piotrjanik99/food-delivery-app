@@ -30,4 +30,8 @@ export default StyleSheet.create({
         fontSize: 18,
         letterSpacing: 0.7,
     },
+    activityIndicator:{
+        justifyContent: "center",
+        marginTop: 350
+    }
 })
