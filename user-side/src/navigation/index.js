@@ -10,13 +10,20 @@ import Profile from '../screens/ProfileScreen';
 import { Entypo } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { FontAwesome } from '@expo/vector-icons'; 
+import { useAuthContext } from '../contexts/AuthContext';
 
 const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
+    const { dbUser } = useAuthContext();
+
     return(
         <Stack.Navigator screenOptions={{headerShown: false}}>
+            {dbUser ? (
             <Stack.Screen name="Home" component={HomeTabs}></Stack.Screen>
+            ) : (
+            <Stack.Screen name="Profile" component={Profile}></Stack.Screen>
+            )}
         </Stack.Navigator>
     );
 };
