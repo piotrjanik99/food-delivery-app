@@ -3,8 +3,13 @@ import { useNavigation } from '@react-navigation/native';
 
 const OrderListItem = ({order}) => {
     const navigation = useNavigation();
+
+    const onPress = () => {
+        navigation.navigate("Order", { id: order.id },);
+      };
+
     return (
-        <Pressable onPress={() => navigation.navigate("Order", {id: order.id})} style={{flexDirection: "row", margin: 10, alignItems: "center"}}>
+        <Pressable onPress={onPress} style={{flexDirection: "row", margin: 10, alignItems: "center"}}>
             <Image
             source={{uri: order.Restaurant.image}}
             style={{width: 90, height: 90, marginRight: 5,}}

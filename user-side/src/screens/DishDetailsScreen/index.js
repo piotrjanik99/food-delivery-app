@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     marginTop: "auto",
     padding: 20,
     alignItems: "center",
+    borderRadius: 30,
   },
   buttonText: {
     color: "white",
