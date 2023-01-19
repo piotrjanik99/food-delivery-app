@@ -1,19 +1,50 @@
-import { View, Text, TextInput, StyleSheet, Alert, Pressable, Modal } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, Pressable, Modal, FlatList } from 'react-native';
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Auth, DataStore } from 'aws-amplify';
 import { User } from '../../models';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native'
+import { Restaurant } from '../../models';
+import { useOrderContext } from '../../contexts/OrderContext';
+import { useBasketContext } from '../../contexts/BasketContext';
+import OrderListItem from "../../components/OrderListItem";
+import RestaurantItem from '../../components/RestaurantItem';
+import { Ionicons } from "@expo/vector-icons";
 
 const Profile = () => {
   const { dbUser } = useAuthContext();
+  const { orders } = useOrderContext();
+  const { basketContext } = useBasketContext();
 
   const [name, setName] = useState(dbUser?.name || "");
   const [address, setAddress] = useState(dbUser?.address || "");
   const [lat, setLat] = useState(dbUser?.lat + "" || "0");
   const [lng, setLng] = useState(dbUser?.lng + "" || "0");
   const [modalVisible, setModalVisible] = useState(false);
+  const [favouriteRestaurant, setFavouriteRestaurant] = useState([]);
+  var createdAt = new Date(dbUser?.createdAt).toLocaleDateString()
+  var updatedAt = new Date(dbUser?.updatedAt).toLocaleDateString()
+
+  const fetchFavourites = async () => {
+    const results = await DataStore.query(Restaurant, (r) => r.rating("gt", 4.4));
+    setFavouriteRestaurant(results)
+  }
+
+  const [restaurants, setRestaurants] = useState([]);
+
+  const fetchRestaurants = async () => {
+    const results = await DataStore.query(Restaurant);
+    setRestaurants(results);
+  }
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
+
+  useEffect(() => {
+    fetchFavourites();
+  }, []);
 
   const { sub, setDbUser } = useAuthContext();
 
@@ -103,7 +134,37 @@ const Profile = () => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Your statistics</Text>
-            
+            <Text>Name: {name} </Text>
+            <Text>User created at: {createdAt}</Text>
+            <Text>User updated at: {updatedAt}</Text>
+            <Text>Your recent orders:</Text>
+            <FlatList
+              style={styles.ordersList}
+              data={orders}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => <OrderListItem order={item} />}
+            />
+            <Ionicons
+              name="arrow-forward-circle-outline"
+              size={45}
+              color="black"
+              style={styles.iconContainer}
+            />
+            <Ionicons
+              name="arrow-down-circle-outline"
+              size={45}
+              color="black"
+              style={styles.secondIconContainer}
+            />
+            <Text style={styles.fav}>Your favourite places:</Text>
+            <FlatList
+              style={styles.restaurantList}
+              data={favouriteRestaurant}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => <RestaurantItem  restaurant={item} />}
+            />
             <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.textStyle}>Close</Text>
             </Pressable>
@@ -131,11 +192,25 @@ const styles = StyleSheet.create({
     textAlign: "center",
     margin: 10,
   },
+  iconContainer:{
+    position: 'absolute',
+    top: 238,
+    left: 0, 
+},
   input: {
     margin: 10,
     backgroundColor: "white",
     padding: 15,
     borderRadius: 5,
+  },
+  ordersList:{
+    height: '100%'
+  },
+  restaurantList:{
+    marginBottom: 45
+  },
+  secondIconContainer:{
+    marginTop: -45
   },
   button: {
     backgroundColor: "black",
@@ -187,12 +262,14 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontSize: 30
   },
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
+    width: 60,
   },
   centeredView: {
     flex: 1,

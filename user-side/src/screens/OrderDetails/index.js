@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import {View, Text, Image, FlatList, ActivityIndicator} from 'react-native';
-import orders from '../../../assets/data/orders.json';
 import BasketDishItem from '../../components/BasketDishItem';
 import { useOrderContext } from '../../contexts/OrderContext';
 import styles from './styles';
@@ -14,7 +13,7 @@ const OrderDetailsHeader = ({ order }) => {
             <Image source={{uri: order.Restaurant.image}} style={styles.image}/>
 
             <View style={styles.container}>
-                <Text style={styles.title}>{order.Restaurant.name}</Text>
+                <Text style={styles.title}>{order.Restaurant?.name}</Text>
                 <Text style={styles.subtitle}>{order.status} &#8226; {order.createdAt}</Text>
                 <Text style={styles.menuTitle}>Your order</Text>
             </View>

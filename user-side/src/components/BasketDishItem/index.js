@@ -6,8 +6,8 @@ const BasketDishItem = ({basketDish}) => {
         <View style={styles.quantityContainer}>
             <Text>{basketDish.quantity}</Text>
         </View>
-        <Text style={styles.itemName}>{basketDish.Dish.name}</Text>
-        <Text style={{marginLeft: "auto"}}>$ {basketDish.Dish.price}</Text>
+        <Text style={styles.itemName}>{basketDish.Dish?.name}</Text>
+        <Text style={{marginLeft: "auto"}}>$ {basketDish.Dish?.price}</Text>
     </View>
     );
 };
